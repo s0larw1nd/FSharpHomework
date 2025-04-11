@@ -47,7 +47,13 @@ let choose_func (typ:bool) num =
     match typ with
     | true -> digSumTail_Wrapper num
     | false -> factorial_wrapper num
-
+    
+// Task 7
+let rec func_num_traversal (num:int) (func:int->int->int) (init:int) :int =
+    match num with
+    | _ when num<10 -> func num init
+    | _ -> func_num_traversal (num/10) func (func (num%10) init)
+    
 // Method 1
 let rec is_coprime digit1 digit2 del =
     match del with
@@ -110,13 +116,16 @@ let task_5 num =
 [<EntryPoint>]
 let main(args : string[]) =
     // Task 1
+    Console.WriteLine("Задание 1")
     Console.WriteLine("Hello World")
     
     // Task 2
+    Console.WriteLine("Задание 2")
     let r = solve_quadratic 3 -14 -5
     Console.WriteLine(r)
     
     // Task 3
+    Console.WriteLine("Задание 3")
     printfn "Введите радиус: "
     let radius_line = Console.ReadLine()
     let radius = float radius_line
@@ -132,16 +141,25 @@ let main(args : string[]) =
     Console.WriteLine(answ_curr)
     
     // Task 4,5
+    Console.WriteLine("Задания 4,5")
     let dst = digSumTop 123456
     let dstl = digSumTail_Wrapper 123456
     Console.WriteLine(dst)
     Console.WriteLine(dstl)
     
     // Task 6
+    Console.WriteLine("Задание 6")
     Console.WriteLine("Сумма цифр: ")
     Console.WriteLine(choose_func true 12)
     Console.WriteLine("Факториал: ")
     Console.WriteLine(choose_func false 12)
+    
+    // Task 7,8
+    Console.WriteLine("Задания 7,8")
+    Console.WriteLine(func_num_traversal 1234 (fun a b -> a + b) 0)
+    Console.WriteLine(func_num_traversal 1234 (fun a b -> a * b) 1)
+    Console.WriteLine(func_num_traversal 12343 (fun a b -> max a b) 0)
+    Console.WriteLine(func_num_traversal 12343 (fun a b -> min a b) 10)
     
     let fkecw = find_k_even_coprime_wrapper 104
     let fmdnd3w = find_max_digit_not_div_3_wrapper 123654
