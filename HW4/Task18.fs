@@ -75,8 +75,6 @@ let is_coprime num1 num2=
     | _ -> false
     
 let find_rational_roots (coef:int array)=
-    printfn "%A" (find_del (coef.[coef.Length-1]) 1 [||])
-    printfn "%A" (find_del (coef.[0]) 1 [||])
     [for p in find_del (coef.[coef.Length-1]) 1 [||] do
         for q in find_del (coef.[0]) 1 [||] do
             if is_coprime p q then
