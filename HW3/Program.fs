@@ -54,6 +54,13 @@ let rec func_num_traversal (num:int) (func:int->int->int) (init:int) :int =
     | _ when num<10 -> func num init
     | _ -> func_num_traversal (num/10) func (func (num%10) init)
     
+// Task 8
+let rec func_num_traversal_cond (num:int) (func:int->int->int) (init:int) (cond:int->bool) :int =
+    match num with
+    | _ when num=0 -> init
+    | _ when cond (num%10) -> func_num_traversal_cond (num/10) func (func (num%10) init) cond
+    | _ -> func_num_traversal_cond (num/10) func init cond
+    
 // Method 1
 let rec is_coprime digit1 digit2 del =
     match del with
@@ -160,6 +167,12 @@ let main(args : string[]) =
     Console.WriteLine(func_num_traversal 1234 (fun a b -> a * b) 1)
     Console.WriteLine(func_num_traversal 12343 (fun a b -> max a b) 0)
     Console.WriteLine(func_num_traversal 12343 (fun a b -> min a b) 10)
+    
+    // Task 9,10
+    Console.WriteLine("Задания 9,10")
+    Console.WriteLine(func_num_traversal_cond 1234 (fun a b -> a + b) 0 (fun a -> a > 2))
+    Console.WriteLine(func_num_traversal_cond 12343 (fun a b -> max a b) 0 (fun a -> a % 2 = 1))
+    Console.WriteLine(func_num_traversal_cond 12343 (fun a b -> min a b) 10 (fun a -> a % 2 = 0))
     
     let fkecw = find_k_even_coprime_wrapper 104
     let fmdnd3w = find_max_digit_not_div_3_wrapper 123654
