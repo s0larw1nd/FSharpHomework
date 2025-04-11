@@ -44,6 +44,20 @@ let idx_desc_List lst =
     |> List.mapi (fun i x -> (x, i))
     |> List.sortByDescending fst
     |> List.map snd
+//1.14
+let rec count_interval lst a b acc=
+    match lst with
+    | [] -> acc
+    | head::tail when a<=head && head<=b -> count_interval tail a b (acc+1)
+    | head::tail -> count_interval tail a b acc
+
+let count_interval_wrapper lst a b=
+    count_interval lst a b 0
+    
+let count_interval_List lst a b=
+    lst
+    |> List.filter(fun i -> a<=i && i<=b)
+    |> List.length
     
 [<EntryPoint>]
 let main(args : string[]) =
@@ -53,7 +67,13 @@ let main(args : string[]) =
     
     //Task 11-16
     let int_lst = read_int_list 5
+    //1.4
     Console.Out.WriteLine(idx_desc_List int_lst)
     Console.Out.WriteLine(idx_desc int_lst)
+    //1.14
+    let a = Convert.ToInt32(Console.ReadLine())
+    let b = Convert.ToInt32(Console.ReadLine())
+    Console.Out.WriteLine(count_interval_wrapper int_lst a b)
+    Console.Out.WriteLine(count_interval_List int_lst a b)
     
     0
