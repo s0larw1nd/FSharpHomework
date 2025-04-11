@@ -88,6 +88,32 @@ let rec find_interval lst a b=
 let find_interval_List lst a b=
     lst
     |> List.filter(fun i -> a<=i && i<=b)
+//1.44
+let rec read_double_list n =
+    match n with
+    | _ when n=0 -> []
+    | _ -> Convert.ToDouble(Console.ReadLine()) :: read_double_list (n-1)
+
+let is_int (num:double)=
+    match num with
+    | _ when num - floor num = 0 -> true
+    | _ -> false
+    
+let rec check_alternation lst integer=
+    match lst with
+    | [] -> true
+    | head::tail when is_int head && not integer -> check_alternation tail true
+    | head::tail when not(is_int head) && integer -> check_alternation tail false
+    | _ -> false
+    
+let check_alternation_wrapper lst=
+    check_alternation lst (not(is_int lst.Head))
+
+let check_alternation_List lst=
+    lst
+    |> List.map is_int
+    |> List.pairwise
+    |> List.forall (fun (a, b) -> a <> b)
     
 [<EntryPoint>]
 let main(args : string[]) =
@@ -111,4 +137,8 @@ let main(args : string[]) =
     //1.34
     Console.Out.WriteLine(find_interval int_lst a b)
     Console.Out.WriteLine(find_interval_List int_lst a b)
+    //1.44
+    let double_lst = read_double_list 5
+    Console.Out.WriteLine(check_alternation_wrapper double_lst)
+    Console.Out.WriteLine(check_alternation_List double_lst)
     0
