@@ -6,6 +6,20 @@ let solve_quadratic (a:float) (b:float) (c:float) =
     match D with
     | _ when D < 0 -> failwith "Incorrect input"
     | _ -> (-b+sqrt(D)) / (2.0 * a), (-b-sqrt(D)) / (2.0 * a)
+    
+// Task 3
+let circleVolume radius =
+    let pi = 3.14159
+    pi * radius * radius
+    
+let cylinderVolume_superposition radius length =
+    let cyl_vol cir_vol = cir_vol * length
+    let vol = circleVolume >> cyl_vol
+    vol radius
+
+let cylinderVolume_currying radius length =
+    let cir_vol = circleVolume radius
+    length * cir_vol
 
 // Method 1
 let rec is_coprime digit1 digit2 del =
@@ -74,6 +88,21 @@ let main(args : string[]) =
     // Task 2
     let r = solve_quadratic 3 -14 -5
     Console.WriteLine(r)
+    
+    // Task 3
+    printfn "Введите радиус: "
+    let radius_line = Console.ReadLine()
+    let radius = float radius_line
+    
+    printfn "Введите высоту: "
+    let length_line = Console.ReadLine()
+    let length = float length_line
+    
+    let answ_super = cylinderVolume_superposition radius length
+    Console.WriteLine(answ_super)
+    
+    let answ_curr = cylinderVolume_currying radius length
+    Console.WriteLine(answ_curr)
     
     let fkecw = find_k_even_coprime_wrapper 104
     let fmdnd3w = find_max_digit_not_div_3_wrapper 123654
