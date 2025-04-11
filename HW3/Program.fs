@@ -20,6 +20,19 @@ let cylinderVolume_superposition radius length =
 let cylinderVolume_currying radius length =
     let cir_vol = circleVolume radius
     length * cir_vol
+    
+// Task 4
+let rec digSumTop digit =
+    if digit < 10 then digit
+    else digit % 10 + digSumTop (digit / 10)
+        
+let rec digSumTail digit acc=
+    if digit < 10 then acc + digit
+    else
+        digSumTail (digit / 10) (acc + digit % 10)
+        
+let digSumTail_Wrapper digit =
+    digSumTail digit 0
 
 // Method 1
 let rec is_coprime digit1 digit2 del =
@@ -103,6 +116,12 @@ let main(args : string[]) =
     
     let answ_curr = cylinderVolume_currying radius length
     Console.WriteLine(answ_curr)
+    
+    // Task 4
+    let dst = digSumTop 123456
+    let dstl = digSumTail_Wrapper 123456
+    Console.WriteLine(dst)
+    Console.WriteLine(dstl)
     
     let fkecw = find_k_even_coprime_wrapper 104
     let fmdnd3w = find_max_digit_not_div_3_wrapper 123654
