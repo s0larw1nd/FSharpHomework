@@ -21,7 +21,7 @@ let cylinderVolume_currying radius length =
     let cir_vol = circleVolume radius
     length * cir_vol
     
-// Task 4
+// Task 4,5
 let rec digSumTop digit =
     if digit < 10 then digit
     else digit % 10 + digSumTop (digit / 10)
@@ -33,6 +33,20 @@ let rec digSumTail digit acc=
         
 let digSumTail_Wrapper digit =
     digSumTail digit 0
+    
+// Task 6
+let rec factorial num acc =
+    match num with
+    | _ when num=0 -> acc
+    | _ -> factorial (num-1) (acc*num)
+
+let factorial_wrapper num =
+    factorial num 1
+    
+let choose_func (typ:bool) num =
+    match typ with
+    | true -> digSumTail_Wrapper num
+    | false -> factorial_wrapper num
 
 // Method 1
 let rec is_coprime digit1 digit2 del =
@@ -117,11 +131,17 @@ let main(args : string[]) =
     let answ_curr = cylinderVolume_currying radius length
     Console.WriteLine(answ_curr)
     
-    // Task 4
+    // Task 4,5
     let dst = digSumTop 123456
     let dstl = digSumTail_Wrapper 123456
     Console.WriteLine(dst)
     Console.WriteLine(dstl)
+    
+    // Task 6
+    Console.WriteLine("Сумма цифр: ")
+    Console.WriteLine(choose_func true 12)
+    Console.WriteLine("Факториал: ")
+    Console.WriteLine(choose_func false 12)
     
     let fkecw = find_k_even_coprime_wrapper 104
     let fmdnd3w = find_max_digit_not_div_3_wrapper 123654
