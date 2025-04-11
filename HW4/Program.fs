@@ -58,6 +58,26 @@ let count_interval_List lst a b=
     lst
     |> List.filter(fun i -> a<=i && i<=b)
     |> List.length
+//1.24
+let rec get_val lst =
+    match lst with
+    | [] -> []
+    | (v, idx) :: rest -> v :: get_val rest
+    
+let rec get_first_two lst (first:bool)=
+    match lst with
+    | [] -> []
+    | head::tail when first -> head::get_first_two tail false
+    | head::tail -> [head]
+
+let find_two_max lst=
+    let sorted_lst = get_val(sort_desc(map_idx lst 0))
+    get_first_two sorted_lst true
+    
+let find_two_max_List lst=
+    lst
+    |>List.sortDescending
+    |>List.take 2
     
 [<EntryPoint>]
 let main(args : string[]) =
@@ -75,5 +95,8 @@ let main(args : string[]) =
     let b = Convert.ToInt32(Console.ReadLine())
     Console.Out.WriteLine(count_interval_wrapper int_lst a b)
     Console.Out.WriteLine(count_interval_List int_lst a b)
+    //1.24
+    Console.Out.WriteLine(find_two_max int_lst)
+    Console.Out.WriteLine(find_two_max_List int_lst)
     
     0
