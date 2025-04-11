@@ -1,5 +1,12 @@
 ﻿open System
 
+// Task 2
+let solve_quadratic (a:float) (b:float) (c:float) =
+    let D : float = b*b - 4.0 * a * c
+    match D with
+    | _ when D < 0 -> failwith "Incorrect input"
+    | _ -> (-b+sqrt(D)) / (2.0 * a), (-b-sqrt(D)) / (2.0 * a)
+
 // Method 1
 let rec is_coprime digit1 digit2 del =
     match del with
@@ -61,7 +68,12 @@ let task_5 num =
 
 [<EntryPoint>]
 let main(args : string[]) =
+    // Task 1
     Console.WriteLine("Hello World")
+    
+    // Task 2
+    let r = solve_quadratic 3 -14 -5
+    Console.WriteLine(r)
     
     let fkecw = find_k_even_coprime_wrapper 104
     let fmdnd3w = find_max_digit_not_div_3_wrapper 123654
