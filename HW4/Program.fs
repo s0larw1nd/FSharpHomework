@@ -114,6 +114,41 @@ let check_alternation_List lst=
     |> List.map is_int
     |> List.pairwise
     |> List.forall (fun (a, b) -> a <> b)
+//1.54
+let rec count_appear lst num acc :int=
+    match lst with
+    | [] -> acc
+    | head::tail when head = num -> count_appear tail num (acc+1)
+    | head::tail -> count_appear tail num acc
+    
+let rec create_lst_appear_3_times lst orig=
+    match lst with
+    | [] -> []
+    | head::tail when count_appear orig head 0 >= 3 -> head::create_lst_appear_3_times tail orig
+    | head::tail -> create_lst_appear_3_times tail orig
+    
+let rec is_uniq lst num=
+    match lst with
+    | [] -> true
+    | head::tail when head<>num -> is_uniq tail num
+    | _ -> false
+
+let rec get_uniq lst res =
+    match lst with
+    | [] -> res
+    | head::tail when is_uniq res head -> get_uniq tail (res@[head])
+    | head::tail -> get_uniq tail res
+    
+let rec get_uniq_wrapper lst=
+    get_uniq lst []
+
+let create_lst_appear_3_times_wrapper lst=
+    get_uniq_wrapper (create_lst_appear_3_times lst lst)
+    
+let create_lst_appear_3_times_List lst=
+    lst
+    |> List.filter(fun i -> count_appear lst i 0 >= 3)
+    |> List.distinct
     
 [<EntryPoint>]
 let main(args : string[]) =
@@ -122,7 +157,7 @@ let main(args : string[]) =
     Console.Out.WriteLine(sort_strings str_lst)
     
     //Task 11-16
-    let int_lst = read_int_list 5
+    let int_lst = read_int_list 10
     //1.4
     Console.Out.WriteLine(idx_desc_List int_lst)
     Console.Out.WriteLine(idx_desc int_lst)
@@ -141,4 +176,7 @@ let main(args : string[]) =
     let double_lst = read_double_list 5
     Console.Out.WriteLine(check_alternation_wrapper double_lst)
     Console.Out.WriteLine(check_alternation_List double_lst)
+    //1.54
+    Console.Out.WriteLine(create_lst_appear_3_times_wrapper int_lst)
+    Console.Out.WriteLine(create_lst_appear_3_times_List int_lst)
     0
