@@ -78,6 +78,16 @@ let find_two_max_List lst=
     lst
     |>List.sortDescending
     |>List.take 2
+//1.34
+let rec find_interval lst a b=
+    match lst with
+    | [] -> []
+    | head::tail when a<=head && head<=b -> head::find_interval tail a b
+    | head::tail -> find_interval tail a b
+
+let find_interval_List lst a b=
+    lst
+    |> List.filter(fun i -> a<=i && i<=b)
     
 [<EntryPoint>]
 let main(args : string[]) =
@@ -98,5 +108,7 @@ let main(args : string[]) =
     //1.24
     Console.Out.WriteLine(find_two_max int_lst)
     Console.Out.WriteLine(find_two_max_List int_lst)
-    
+    //1.34
+    Console.Out.WriteLine(find_interval int_lst a b)
+    Console.Out.WriteLine(find_interval_List int_lst a b)
     0
