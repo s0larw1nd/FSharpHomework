@@ -1,11 +1,22 @@
-﻿let sieve limit =
+﻿let rec sieve_helper_2 (isPrime: bool array) i j limit =
+    match j with
+    | _ when j > limit -> isPrime
+    | _ ->  isPrime.[j] <- false
+            sieve_helper_2 isPrime i (j + i) limit
+             
+let rec sieve_helper (isPrime: bool array) i limit =
+    match (i*i) with
+    | _ when (i*i) > limit -> isPrime
+    | _ when (i*i) <= limit && isPrime.[i] ->
+        sieve_helper_2 isPrime i (i * i) limit
+        sieve_helper isPrime (i + 1) limit
+    | _ -> sieve_helper isPrime (i + 1) limit
+
+let sieve limit =
     let isPrime = Array.create (limit + 1) true
     isPrime.[0] <- false
     isPrime.[1] <- false
-    for i in 2 .. (int (sqrt (float limit))) do
-        if isPrime.[i] then
-            for j in i * i .. i .. limit do
-                isPrime.[j] <- false
+    sieve_helper isPrime 2 limit
     isPrime
     |> Array.mapi (fun i prime -> if prime then Some i else None)
     |> Array.choose id
